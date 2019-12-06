@@ -2,4 +2,10 @@
 <resources>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="margin_left_start">20dp</dimen>
+    <dimen name="margin_right_end">20dp</dimen>
+    <dimen name="heading_text_size">22sp</dimen>
+    <dimen name="margin_top_between_textviews">20dp</dimen>
+    <dimen name="margin_top_heading_content">5dp</dimen>
+    <dimen name="scrollview_bottom_space">40dp</dimen>
 </resources>
