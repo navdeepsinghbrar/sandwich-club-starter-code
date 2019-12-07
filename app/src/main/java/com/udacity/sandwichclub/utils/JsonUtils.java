@@ -23,6 +23,7 @@ public class JsonUtils {
 
         try {
 
+            //Parsing JSON string
             JSONObject sandwichDetails = new JSONObject(json);
             JSONObject name = sandwichDetails.getJSONObject("name");
 
@@ -30,7 +31,7 @@ public class JsonUtils {
 
             JSONArray alsoKnownAsArray = name.getJSONArray("alsoKnownAs");
 
-            if (alsoKnownAsArray.length()>0) for (int i = 0; i < alsoKnownAsArray.length(); i++)
+            for (int i = 0; i < alsoKnownAsArray.length(); i++)
                 alsoKnownAs.add(alsoKnownAsArray.getString(i));
 
             placeOfOrigin = sandwichDetails.getString("placeOfOrigin");
@@ -41,7 +42,7 @@ public class JsonUtils {
 
             JSONArray ingredientsArray = sandwichDetails.getJSONArray("ingredients");
 
-            if (ingredientsArray.length()>0) for (int i = 0; i < ingredientsArray.length(); i++)
+            for (int i = 0; i < ingredientsArray.length(); i++)
                 ingredients.add(ingredientsArray.getString(i));
 
             return new Sandwich(mainName, alsoKnownAs, placeOfOrigin, description, image, ingredients);

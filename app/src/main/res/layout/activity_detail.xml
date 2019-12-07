@@ -14,6 +14,7 @@
         android:contentDescription="@string/sandwich_picture_content_description"
         android:scaleType="centerCrop" />
 
+<!--To view given information in smaller screens or in horizontal view-->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -110,6 +111,8 @@
                     android:layout_marginLeft="@dimen/margin_left_start" />
 
             </LinearLayout>
+
+            <!--To put space between the end of linear layout and end of scroll view-->
 
             <Space
                 android:layout_width="match_parent"

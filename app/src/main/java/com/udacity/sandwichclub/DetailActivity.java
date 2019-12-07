@@ -70,6 +70,7 @@ public class DetailActivity extends AppCompatActivity {
     private void populateUI(Sandwich sandwich) {
 
         String alsoKnownAs = "";
+        //To view all the aliases of the sandwich in a stack view rather than one after other
         for (String alsoKnownAsName : sandwich.getAlsoKnownAs()){
             alsoKnownAs += alsoKnownAsName + "\n";
         }
