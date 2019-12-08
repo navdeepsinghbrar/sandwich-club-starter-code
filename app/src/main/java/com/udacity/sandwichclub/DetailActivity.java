@@ -3,6 +3,7 @@ package com.udacity.sandwichclub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,9 +55,12 @@ public class DetailActivity extends AppCompatActivity {
             return;
         }
 
+        //Placeholder, error backup image(image_not_available in drawable) in case image URL is no longer valid.
         populateUI(sandwich);
         Picasso.with(this)
-                .load(sandwich.getImage())
+                .load(sandwich.getImage().isEmpty()?null:sandwich.getImage())
+                .placeholder(R.drawable.image_not_available)
+                .error(R.drawable.image_not_available)
                 .into(ingredientsIv);
 
         setTitle(sandwich.getMainName());
@@ -71,13 +75,8 @@ public class DetailActivity extends AppCompatActivity {
 
         String alsoKnownAs = "";
         //To view all the aliases of the sandwich in a stack view rather than one after other
-        for (String alsoKnownAsName : sandwich.getAlsoKnownAs()){
-            alsoKnownAs += alsoKnownAsName + "\n";
-        }
+        alsoKnownAs = TextUtils.join("\n", sandwich.getAlsoKnownAs());
 
-        if(alsoKnownAs.length()>0){
-            alsoKnownAs = alsoKnownAs.substring(0,alsoKnownAs.length()-1);
-        }
         mAlsoKnownAs.setText(alsoKnownAs);
 
         mPlaceOfOrigin.setText(sandwich.getPlaceOfOrigin());
@@ -85,13 +84,7 @@ public class DetailActivity extends AppCompatActivity {
         mDescription.setText(sandwich.getDescription());
 
         String ingredients = "";
-        for (String ingredient : sandwich.getIngredients()){
-            ingredients += ingredient + "\n";
-        }
-
-        if(ingredients.length()>0){
-            ingredients = ingredients.substring(0,ingredients.length()-1);
-        }
+        ingredients = TextUtils.join("\n", sandwich.getIngredients());
 
         mIngredients.setText(ingredients);
 
