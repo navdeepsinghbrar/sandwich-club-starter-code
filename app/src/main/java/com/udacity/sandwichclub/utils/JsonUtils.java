@@ -11,6 +11,15 @@ import java.util.List;
 
 public class JsonUtils {
 
+    private static final String JSON_KEY_NAME = "name";
+    private static final String JSON_KEY_MAIN_NAME = "mainName";
+    private static final String JSON_KEY_ALSO_KNOWN_AS = "alsoKnownAs";
+    private static final String JSON_KEY_PLACE_OF_ORIGIN = "placeOfOrigin";
+    private static final String JSON_KEY_DESCRIPTION = "description";
+    private static final String JSON_KEY_IMAGE = "image";
+    private static final String JSON_KEY_INGREDIENTS = "ingredients";
+    private static final String JSON_FALL_BACK_STRING = "Data not available";
+
     public static Sandwich parseSandwichJson(String json) {
 
 
@@ -25,25 +34,29 @@ public class JsonUtils {
 
             //Parsing JSON string
             JSONObject sandwichDetails = new JSONObject(json);
-            JSONObject name = sandwichDetails.getJSONObject("name");
+            JSONObject name = sandwichDetails.optJSONObject(JSON_KEY_NAME);
 
-            mainName = name.getString("mainName");
+            mainName = name.optString(JSON_KEY_MAIN_NAME).isEmpty()? JSON_FALL_BACK_STRING : name.optString(JSON_KEY_MAIN_NAME);
 
-            JSONArray alsoKnownAsArray = name.getJSONArray("alsoKnownAs");
+            JSONArray alsoKnownAsArray = name.optJSONArray(JSON_KEY_ALSO_KNOWN_AS);
 
             for (int i = 0; i < alsoKnownAsArray.length(); i++)
                 alsoKnownAs.add(alsoKnownAsArray.getString(i));
 
-            placeOfOrigin = sandwichDetails.getString("placeOfOrigin");
+            if(alsoKnownAs.isEmpty())alsoKnownAs.add(JSON_FALL_BACK_STRING);
 
-            description = sandwichDetails.getString("description");
+            placeOfOrigin = sandwichDetails.optString(JSON_KEY_PLACE_OF_ORIGIN).isEmpty()? JSON_FALL_BACK_STRING : sandwichDetails.optString(JSON_KEY_PLACE_OF_ORIGIN);
 
-            image = sandwichDetails.getString("image");
+            description = sandwichDetails.optString(JSON_KEY_DESCRIPTION).isEmpty()? JSON_FALL_BACK_STRING : sandwichDetails.optString(JSON_KEY_DESCRIPTION);
 
-            JSONArray ingredientsArray = sandwichDetails.getJSONArray("ingredients");
+            image = sandwichDetails.optString(JSON_KEY_IMAGE);
+
+            JSONArray ingredientsArray = sandwichDetails.optJSONArray(JSON_KEY_INGREDIENTS);
 
             for (int i = 0; i < ingredientsArray.length(); i++)
                 ingredients.add(ingredientsArray.getString(i));
+
+            if(ingredients.isEmpty())ingredients.add(JSON_FALL_BACK_STRING);
 
             return new Sandwich(mainName, alsoKnownAs, placeOfOrigin, description, image, ingredients);
 
